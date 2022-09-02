@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+	<html lang="fr">
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+        <title>Login</title>
+        <link rel="stylesheet" href="../public/style.css">
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <link rel="shortcut icon" href="../public/images/favicon.png" type="image/x-icon">
+    </head>
+    <style>
+        body {
+            height: 800px;
+        }
+        footer {
+            color: black;
+        }
+    </style>
+    <header>
+        <%- include ('./partials/header.ejs') %>
+    </header>
+	<body>
+		<div class="central">
+			<h1><%= title %></h1>
+			<br>
+            <legend>Veuillez saisir vos identifiants</legend>
+			<div id="login">
+				<form>
+					<label for="email">Email</label>
+					<input type="text" name="email" id="email">
+					<label for="password">Mot de passe</label>
+					<input type="password" name="password" id="password">
+					<button type="submit">Connexion</button>
+				</form>
+			</div>
+           <br>
+            <div id="profile" style="display:none">
+                <button id="display-payload">Voir le payload</button>
+                <button id="disconnectBtn">Déconnexion</button>
+                <div id="decoded-payload"><br></div>
+                <div>
+                    <a href="#" id="member-only">Votre compte</a>
+                    <div id="member-data"></div>
+                </div>
+            </div>
+		</div>
+		<footer>
+            <%- include ('./partials/footer.ejs') %>		
+        </footer>
+
+	<script>
+			var form = document.querySelector('form');
+			form.addEventListener("submit", loginUser);	
+            
+            var loginArea = document.querySelector('#login');
+            var profileArea = document.querySelector('#profile');
+            var connectionLinkArea = document.querySelector('#connectionLink');
+            handleFormDisplay();
+
+            var displayPayloadBtn = document.querySelector('#display-payload');
+            displayPayloadBtn.addEventListener('click', displayPayload);
+
+            var disconnectBtn = document.querySelector('#disconnectBtn');
+            disconnectBtn.addEventListener('click', disconnect);
+
+            var memberOnlyLink = document.querySelector('#member-only');
+            memberOnlyLink.addEventListener('click', makeRequestWithToken);
+
+			function loginUser(event) {				
+                loginUserWithXHR(event);
+			}	
+			
+			function loginUserWithXHR(event) {		
+				event.preventDefault();
+                console.log('loginUserWithXHR');		
+
+				var xhr = new XMLHttpRequest();
+				xhr.open("POST", '/login', true);
+
+				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+				xhr.onreadystatechange = function() {
+					if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                      
+                      var token = xhr.response;
+                      localStorage.setItem('token', token);
+                       switchToLoggedinMode();
+
+						form.reset();
+					}
+				}				
+				var email = document.getElementById('email').value;
+				var password = document.getElementById('password').value;
+				var payLoad = "email=" + email + "&" + "password=" + password; 
+				xhr.send(payLoad); 				
+			}
+
+            function handleFormDisplay() { 
+              tokenFromStorage = localStorage.getItem('token');            
+              console.log('handleFormDisplay tokenFromStorage', tokenFromStorage);   
+              if(tokenFromStorage) {
+                  switchToLoggedinMode();                     
+              } else {
+                  switchToLoggedOutMode();
+              }
+            }
+
+            function switchToLoggedinMode() {
+               loginArea.style.display = 'none';
+               profileArea.style.display = 'block';
+               connectionLinkArea.innerHTML = '<a href="/login">Déconnexion</a>';
+            }
+
+            function switchToLoggedOutMode() {
+               loginArea.style.display = 'block';
+               profileArea.style.display = 'none';
+               connectionLinkArea.innerHTML = '<a href="/login">Connexion</a>';      
+            }
+
+            function displayPayload() {
+               var payload = parseJwt();
+               var decodedPayloadDiv = document.querySelector('#decoded-payload');
+               decodedPayloadDiv.innerHTML = '<pre>' + JSON.stringify(payload) + '</pre>';
+            }
+
+            function parseJwt () { 
+             tokenFromStorage = localStorage.getItem('token');            
+             console.log('parseJwt tokenFromStorage', tokenFromStorage);
+             if(tokenFromStorage) {
+                 var base64Payload = tokenFromStorage.split('.')[1];                
+                 return JSON.parse(window.atob(base64Payload));
+                } else {
+                    return 'no token to parse';
+                }          
+            };
+
+            function disconnect() {
+               switchToLoggedOutMode();
+               localStorage.removeItem('token');
+            }
+
+            function makeRequestWithToken(evt) {
+             evt.preventDefault();
+             console.log('makeRequestWithToken');
+             var page = this.id;
+             tokenFromStorage = localStorage.getItem('token');   
+             var config = {};
+             if(tokenFromStorage) {
+                 config.headers =  {'Authorization': "Bearer " + JSON.parse(tokenFromStorage)}
+            }
+
+            var bodyParameters = {};
+
+             axios.get( 
+                 'http://localhost:3000/' + page,
+                 config
+             ).then((res) => {
+                 console.log('success');
+                 console.log(res);  
+                 const memberDataDiv = document.querySelector('#member-data');
+                 memberDataDiv.innerHTML = '<pre>Bienvenue ' + res.data.user + '<br>'
+                                            + '. Votre rôle : ' + res.data.role  + '<br>'
+                                             + '. Vous pouvez tout casser sur ' + res.data.iss
+                                            + '</pre>';
+            })
+            .catch(err => {
+                console.error('makeRequestWithToken err', err);
+             });
+         }
+		</script>
+	</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">    <title>Cinénode </title>
+    <link rel="stylesheet" href="../public/style.css">
+    <link rel="shortcut icon" href="../public/images/favicon.png" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <%- include ('./partials/header.ejs') %>
+    </header>
+    <div class="central">
+        <div id="banner">
+            <img src="../public/images/banner.png" alt="banner titre">
+        </div>
+            <div class="presentation">
+                <strong>Cinénode</strong> vous permet de pouvoir chercher les informations sur des films en se basant sur la base de donnée : <em> The Movie Database </em> via le menu <em>Recherche MovieDB</em> mais il vous permet aussi de pouvoir ajouter à votre <em>compte personnel</em> (sécurisé par token avec Jwt entre autre), les films que vous aimez afin de pouvoir avoir une liste détaillée des informations les concernant. Cette liste se trouve sur le menu <em>Mes Films</em>. Dans ce menu, vous pourrez ajouter, modifier et supprimer des films qui seront stockés sur la base de donnée MongoDB afin de pouvoir y accéder très facilement.
+                <br>
+                <strong><center>Ce site est développé en Node.JS</center></strong>
+            </div>
+    </div>
+    <footer>     
+        <%- include ('./partials/footer.ejs') %>
+    </footer>
+    </body>
+</html>
