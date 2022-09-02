@@ -11,8 +11,14 @@
 </head>
 <body>
     <header>
-        <%- include ('./views/partials/header.html') %>
-    </header>
+<nav class="navbar background">
+    <ul class="nav-list">
+        <li><a href="/">Cinénode</a></li>
+        <li><a href="/movies">Mes Films</a></li>
+        <li><a href="/movie-search">Recherche MovieDB</a></li>
+        <li><span id="connectionLink"><a href="/login">Connexion</a></span></li>
+    </ul>
+</nav>    </header>
     <div class="central">
         <div id="banner">
             <img src="./public/images/banner.png" alt="banner titre">
@@ -24,7 +30,58 @@
             </div>
     </div>
     <footer>     
-        <%- include ('./views/partials/footer.html') %>
+        <hr>
+<p> Copyright &copy; 2022 Valentin</p>
+
+<script>
+   
+   (function(exports, d) {
+        function domReady(fn, context) {
+
+            function onReady(event) {
+                d.removeEventListener("DOMContentLoaded", onReady);
+                fn.call(context || exports, event);
+            }
+
+            function onReadyIe(event) {
+                if (d.readyState === "complete") {
+                    d.detachEvent("onreadystatechange", onReadyIe);
+                    fn.call(context || exports, event);
+                }
+            }
+
+            d.addEventListener && d.addEventListener("DOMContentLoaded", onReady) ||
+            d.attachEvent      && d.attachEvent("onreadystatechange", onReadyIe);
+        }
+
+        exports.domReady = domReady;
+    })(window, document);
+
+    domReady(function() {
+        console.log('DOM is ready :)');
+        
+        var connectionLinkArea = document.querySelector('#connectionLink');
+        testUserStatus();
+
+        function testUserStatus() {
+            if(localStorage.getItem('token')) {
+                displayLoggedInView();
+            } else {
+                displayLoggedOutView();
+            }
+        }
+
+        function displayLoggedInView() {
+            connectionLinkArea.innerHTML = '<a href="/login">Déconnexion</a>';
+        }
+
+        function displayLoggedOutView() {
+            connectionLinkArea.innerHTML = '<a href="/login">Connexion</a>';            
+        }
+
+    });
+
+</script>
     </footer>
     </body>
 </html>
