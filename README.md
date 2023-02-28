@@ -8,6 +8,8 @@ Un second menu permet de faire des recherches sur la base de donnée The Movie D
 
 Un espace membre a été intégré et sécurisé avec l’utilisation d’un JWT (JSON Web Token) et stocké en base de données sur MongoDB.
 
+Ce site étant un premier essai lors de ma découverte de NodeJs, ce n'est qu'une ébauche.
+
 
 Very first site developed in NodeJS, ExpressJS, with use of MongoDB for the database and the API of The Movie Database.
 
@@ -17,14 +19,17 @@ A second menu allows you to search The Movie Database via the API.
 
 A member space has been integrated and secured with the use of a JWT (JSON Web Token) and stored in a database on MongoDB.
 
-![image](https://user-images.githubusercontent.com/18125893/221964395-abeb0ef2-54e9-4d3f-80ad-3d24a0098ce9.png)
+This site being a first try during my discovery of NodeJs, it is only a draft.
 
-![image](https://user-images.githubusercontent.com/18125893/221964425-0d43a8bc-908b-4687-8b62-c323c2615954.png)
 
-![image](https://user-images.githubusercontent.com/18125893/221964461-4926cab8-9dba-4eaa-ac91-9ef15e01d89b.png)
+![image](https://user-images.githubusercontent.com/18125893/221964947-3d51e8cf-1b2b-47cb-9003-38579694a631.png)
 
-![image](https://user-images.githubusercontent.com/18125893/221964490-c0078df5-039c-49e2-a02d-f37a41951163.png)
+![image](https://user-images.githubusercontent.com/18125893/221964997-9adfbc71-6836-4b13-bbcb-88814abe0ea3.png)
 
-![image](https://user-images.githubusercontent.com/18125893/221964567-77fa8cc9-11dc-4fa7-8370-204827c0960d.png)
+![image](https://user-images.githubusercontent.com/18125893/221965037-ce684657-dd00-4022-9899-48be350069c6.png)
 
-![image](https://user-images.githubusercontent.com/18125893/221964588-6d0b15de-e334-452a-af16-2e85523bbdc2.png)
+![image](https://user-images.githubusercontent.com/18125893/221965124-1ba8a72b-2548-4047-be06-b6a058d8760c.png)
+
+![image](https://user-images.githubusercontent.com/18125893/221965217-708367f6-1c8d-4851-a9d7-992624ae1abd.png)
+
+![image](https://user-images.githubusercontent.com/18125893/221965288-31715311-987e-44d8-8d68-607e72b95192.png)
