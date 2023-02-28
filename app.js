@@ -37,7 +37,7 @@ app.set('view engine', 'ejs');
 
 app.use('/public', express.static('public'));
 
-const secret = 'qsdjS12ozehdoIJ123DJOZJLDSCqsdeffdg123ER56SDFZedhWXojqshduzaohduihqsDAqsdq';
+const secret = '************************************************************';
 
 app.get(jwt({ secret: secret, algorithms: ["HS256"]})
     .unless({ path: ['/', '/movies', new RegExp('/movies.*/', 'i'), '/movie-search', '/login', new RegExp('/movie-details.*/', 'i')]}));
