@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const secret = 'qsdjS12ozehdoIJ123DJOZJLDSCqsdeffdg123ER56SDFZedhWXojqshduzaohduihqsDAqsdq';
+const secret = '*********************************************************';
 
 exports.login = (req, res) => {
     res.render('login', { title: 'Espace membre'});
